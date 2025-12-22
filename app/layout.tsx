@@ -3,8 +3,12 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'The Noor School',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  description: 'Welcome to The Noor School - Education with Values',
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
 }
 
 export default function RootLayout({
