@@ -4,12 +4,45 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react"
+import { MapPin, Phone, Mail, Facebook, Instagram } from "lucide-react"
 import { FadeIn } from "@/components/animations/fade-in"
 import { StaggerContainer, StaggerItem } from "@/components/animations/stagger-container"
 import { motion } from "framer-motion"
+import { useState } from "react"
+import { toast } from "sonner"
 
 export default function ContactSection() {
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", subject: "", message: "" })
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+      const result = await res.json()
+      if (result.success) {
+        toast.success("Message sent successfully! We'll get back to you soon.")
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" })
+      } else {
+        toast.error(result.error?.message || "Failed to send message")
+      }
+    } catch (err) {
+      toast.error("Error sending message")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <footer id="contact" className="bg-gray-900 text-white py-16 relative overflow-hidden">
       {/* Animated Background Elements */}
@@ -140,24 +173,6 @@ export default function ContactSection() {
                       </Button>
                     </a>
                   </motion.div>
-                  <motion.div whileHover={{ scale: 1.1, y: -2 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
-                    <a
-                      href="https://youtube.com/yourchannel"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className="border-gray-600 text-gray-300 hover:text-white hover:bg-blue-600 hover:border-blue-600 bg-transparent transition-all duration-300"
-                      >
-                        {/* YouTube icon is not imported from Lucide, so use a placeholder or import from another icon set if needed */}
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                          <path d="M21.8 8.001a2.752 2.752 0 0 0-1.938-1.948C18.077 6 12 6 12 6s-6.077 0-7.862.053A2.752 2.752 0 0 0 2.2 8.001 28.934 28.934 0 0 0 2 12a28.934 28.934 0 0 0 .2 3.999 2.752 2.752 0 0 0 1.938 1.948C5.923 18 12 18 12 18s6.077 0 7.862-.053A2.752 2.752 0 0 0 21.8 15.999 28.934 28.934 0 0 0 22 12a28.934 28.934 0 0 0-.2-3.999zM10 15V9l6 3-6 3z" />
-                        </svg>
-                      </Button>
-                    </a>
-                  </motion.div>
                 </div>
               </motion.div>
             </div>
@@ -170,22 +185,30 @@ export default function ContactSection() {
                 <CardTitle className="text-white text-2xl">Get in Touch</CardTitle>
               </CardHeader>
               <CardContent>
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <StaggerContainer className="grid md:grid-cols-2 gap-4">
                     <StaggerItem>
                       <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                         <Input
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
                           placeholder="Your Name"
                           className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 transition-colors"
+                          required
                         />
                       </motion.div>
                     </StaggerItem>
                     <StaggerItem>
                       <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                         <Input
+                          name="email"
                           type="email"
+                          value={formData.email}
+                          onChange={handleChange}
                           placeholder="Your Email"
                           className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 transition-colors"
+                          required
                         />
                       </motion.div>
                     </StaggerItem>
@@ -194,10 +217,28 @@ export default function ContactSection() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    whileFocus={{ scale: 1.02 }}
+                  >
+                    <Input
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="Phone (Optional)"
+                      className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 transition-colors"
+                    />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.3 }}
                     whileFocus={{ scale: 1.02 }}
                   >
                     <Input
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
                       placeholder="Subject"
                       className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 transition-colors"
                     />
@@ -210,14 +251,22 @@ export default function ContactSection() {
                     whileFocus={{ scale: 1.02 }}
                   >
                     <Textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
                       placeholder="Your Message"
                       rows={5}
                       className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 transition-colors resize-none"
+                      required
                     />
                   </motion.div>
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl">
-                      Send Message
+                    <Button 
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full bg-blue-600 hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      {isLoading ? "Sending..." : "Send Message"}
                     </Button>
                   </motion.div>
                 </form>
@@ -226,7 +275,7 @@ export default function ContactSection() {
           </FadeIn>
         </div>
 
-        {/* Google Map Placeholder */}
+        {/* Google Map */}
         <FadeIn delay={0.6}>
           <div className="mt-12">
             <h3 className="text-2xl font-bold mb-6">Find Us</h3>

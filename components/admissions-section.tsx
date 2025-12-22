@@ -1,11 +1,11 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FileText, Calendar, Users, CheckCircle } from "lucide-react"
 import { FadeIn } from "@/components/animations/fade-in"
 import { StaggerContainer, StaggerItem } from "@/components/animations/stagger-container"
 import { motion } from "framer-motion"
+import { AdmissionsFormModal } from "./admissions-form-modal"
 
 export default function AdmissionsSection() {
   const handleDownloadForm = () => {
@@ -16,6 +16,7 @@ export default function AdmissionsSection() {
     link.click()
     document.body.removeChild(link)
   }
+
   const steps = [
     {
       icon: FileText,
@@ -119,16 +120,20 @@ export default function AdmissionsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Download our admission form and take the first step towards quality education
+              Submit your application online or download our admission form and take the first step towards quality education
             </motion.p>
             <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
-              <Button
-                size="lg"
-                className="bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300"
-                onClick={handleDownloadForm}
-              >
-                Download Admission Form
-              </Button>
+              <div className="flex gap-4 justify-center flex-wrap">
+                <AdmissionsFormModal />
+                <motion.button
+                  onClick={handleDownloadForm}
+                  className="px-8 py-3 bg-white hover:bg-gray-100 text-blue-600 font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-600"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Download Form
+                </motion.button>
+              </div>
             </motion.div>
           </motion.div>
         </FadeIn>
