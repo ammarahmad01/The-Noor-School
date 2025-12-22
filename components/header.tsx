@@ -68,11 +68,11 @@ export default function Header() {
               </div>
               {/* Removed the yellow animated dot */}
             </motion.div>
-            <div className="hidden sm:block">
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+            <div className="block">
+              <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent leading-tight">
                 The Noor School
               </h1>
-              <p className="text-xs text-gray-500 font-medium tracking-wide uppercase">Education with Values</p>
+              <p className="hidden sm:block text-xs text-gray-500 font-medium tracking-wide uppercase">Education with Values</p>
             </div>
           </motion.div>
 
