@@ -72,7 +72,7 @@ export default function Header() {
               <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent leading-tight">
                 The Noor School
               </h1>
-              <p className="hidden sm:block text-xs text-gray-500 font-medium tracking-wide uppercase">Education with Values</p>
+              <p className="text-[11px] sm:text-xs text-gray-600 font-medium tracking-wide uppercase leading-tight">Education with Values</p>
             </div>
           </motion.div>
 
