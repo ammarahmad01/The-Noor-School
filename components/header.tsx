@@ -27,7 +27,6 @@ export default function Header() {
     { name: "Facilities", href: "#facilities" },
     { name: "Gallery", href: "#gallery" },
     { name: "News & Events", href: "#news" },
-    { name: "Contact", href: "#contact" },
   ]
 
   useEffect(() => {
