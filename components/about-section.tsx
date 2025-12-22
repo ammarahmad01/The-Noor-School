@@ -27,9 +27,10 @@ export default function AboutSection() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-gray-600 text-lg mb-6"
               >
-                Established with a vision to provide holistic education, The Noor School has been a beacon of learning
+                The Noor Scool is established in 2001 with a vision to provide holistic education, The Noor School has been a beacon of learning
                 excellence for over two decades. We believe in nurturing not just academic brilliance but also character
-                development and moral values.
+                development and moral values. The school is affiliated with the Federal Board of Intermediate and Secondary Education
+                (FBISE) and offers a comprehensive curriculum from Kindergarten to Grade 10.
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}

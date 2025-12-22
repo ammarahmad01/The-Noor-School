@@ -5,6 +5,22 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 
 export default function HeroSection() {
+    const handleDownloadForm = () => {
+      const link = document.createElement("a")
+      link.href = "/The_Noor_School_Admission_Form.pdf"
+      link.download = "The_Noor_School_Admission_Form.pdf"
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+
+    const handleExploreAcademics = () => {
+      const academicsSection = document.getElementById("academics")
+      if (academicsSection) {
+        academicsSection.scrollIntoView({ behavior: "smooth" })
+      }
+    }
+
   return (
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -51,8 +67,8 @@ export default function HeroSection() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 shadow-lg">
-              Apply Now
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 shadow-lg" onClick={handleDownloadForm}>
+              Download Admission Form
             </Button>
           </motion.div>
           <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
@@ -60,6 +76,7 @@ export default function HeroSection() {
               size="lg"
               variant="outline"
               className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 bg-transparent shadow-lg"
+                          onClick={handleExploreAcademics}
             >
               Explore Academics
             </Button>

@@ -11,6 +11,14 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
+  const handleContactClick = () => {
+    const contactSection = document.getElementById("contact")
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" })
+    }
+    setIsMenuOpen(false)
+  }
+
   const navigation = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
@@ -104,8 +112,11 @@ export default function Header() {
               className="hidden md:block"
             >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-medium">
-                  Apply Now
+                <Button
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-medium"
+                  onClick={handleContactClick}
+                >
+                  Contact Us
                 </Button>
               </motion.div>
             </motion.div>
@@ -191,9 +202,9 @@ export default function Header() {
                 >
                   <Button
                     className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-xl shadow-lg font-medium"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={handleContactClick}
                   >
-                    Apply Now
+                    Contact Us
                   </Button>
                 </motion.div>
               </div>

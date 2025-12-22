@@ -8,6 +8,14 @@ import { StaggerContainer, StaggerItem } from "@/components/animations/stagger-c
 import { motion } from "framer-motion"
 
 export default function AdmissionsSection() {
+  const handleDownloadForm = () => {
+    const link = document.createElement("a")
+    link.href = "/The_Noor_School_Admission_Form.pdf"
+    link.download = "The_Noor_School_Admission_Form.pdf"
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
   const steps = [
     {
       icon: FileText,
@@ -117,6 +125,7 @@ export default function AdmissionsSection() {
               <Button
                 size="lg"
                 className="bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300"
+                onClick={handleDownloadForm}
               >
                 Download Admission Form
               </Button>

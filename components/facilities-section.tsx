@@ -5,6 +5,7 @@ import { BookOpen, Microscope, Monitor, Trophy, Coffee } from "lucide-react"
 import { FadeIn } from "@/components/animations/fade-in"
 import { StaggerContainer, StaggerItem } from "@/components/animations/stagger-container"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 export default function FacilitiesSection() {
   const facilities = [
@@ -12,31 +13,31 @@ export default function FacilitiesSection() {
       title: "Library",
       description: "Well-stocked library with over 10,000 books, digital resources, and quiet study areas.",
       icon: BookOpen,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/library.jpg",
     },
     {
       title: "Science Lab",
       description: "Modern laboratories equipped with latest instruments for physics, chemistry, and biology.",
       icon: Microscope,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/sciencelab.jpg",
     },
     {
       title: "IT Lab",
       description: "Computer lab with high-speed internet and latest software for digital literacy.",
       icon: Monitor,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/itlab.jpg",
     },
     {
       title: "Sports Ground",
       description: "Multi-purpose sports facilities including basketball, football, and athletics track.",
       icon: Trophy,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/sports.jpg",
     },
     {
       title: "Cafeteria",
       description: "Hygienic cafeteria serving nutritious meals and snacks throughout the day.",
       icon: Coffee,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/cafe.jpg",
     },
   ]
 
@@ -45,7 +46,7 @@ export default function FacilitiesSection() {
       <div className="container mx-auto px-4">
         <FadeIn>
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">World-Class Facilities</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Facilities</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               State-of-the-art facilities designed to enhance learning and provide a comfortable environment for
               students
@@ -69,18 +70,13 @@ export default function FacilitiesSection() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <motion.div
-                      initial={{ scale: 0, rotate: -90 }}
-                      whileInView={{ scale: 1, rotate: 0 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        duration: 0.6,
-                        delay: index * 0.1,
-                        type: "spring",
-                      }}
-                    >
-                      <facility.icon className="w-16 h-16 text-blue-600 group-hover:text-blue-700 transition-colors" />
-                    </motion.div>
+                    <Image
+                      src={facility.image}
+                      alt={facility.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
                     <motion.div
                       className="absolute inset-0 bg-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       initial={false}

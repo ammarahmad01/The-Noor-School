@@ -9,6 +9,13 @@ import { motion } from "framer-motion"
 export default function NewsEventsSection() {
   const news = [
     {
+      title: "Noorians Expo 2025",
+      description: "Step into the world of our students as they showcase their creativity, confidence, and curiosity through engaging activities, playful learning, and joyful discoveries!",
+      date: "December 25, 2025",
+      time: "9:30 AM - 1:30 PM",
+      type: "Event",
+    },
+    {
       title: "Kids Summer Camp 2025",
       description: "Our youngest learners (ages 3–5) will discover, create, and shine as they explore fun activities and playful experiments in our exciting science-themed showcase!",
       date: "July 11-26, 2025",
@@ -18,7 +25,7 @@ export default function NewsEventsSection() {
     {
       title: "Parent-Teacher Meeting",
       description: "Join us for a warm and joyful Parent-Teacher Meeting where we celebrate the growth, creativity, and little milestones of our curious learners.",
-      date: "February 22, 2024",
+      date: "February 22, 2025",
       time: "9:00 AM - 1:00 PM",
       type: "Event",
     },
@@ -27,13 +34,6 @@ export default function NewsEventsSection() {
       description: "A special session for parents, focused on nurturing young minds with love, patience, and playful learning at home and beyond!",
       date: "Fevruary 08, 2025",
       time: "12:00 PM- 01:00 PM",
-      type: "Event",
-    },
-    {
-      title: "Noorians Open House",
-      description: "Step into the world of our students as they showcase their creativity, confidence, and curiosity through engaging activities, playful learning, and joyful discoveries!",
-      date: "December 24, 2024",
-      time: "8:00 AM - 2:00 PM",
       type: "Event",
     },
   ]
