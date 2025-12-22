@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../lib/generated/prisma"
@@ -11,4 +5,189 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+model admissions_applications {
+  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_first_name String
+  student_last_name  String
+  dob                DateTime?          @db.Date
+  gender             gender?
+  grade_applied_id   String?            @db.Uuid
+  parent_name        String
+  parent_phone       String
+  parent_email       String
+  address_text       String?
+  previous_school    String?
+  status             application_status @default(submitted)
+  notes              String?
+  submitted_at       DateTime           @default(now()) @db.Timestamptz(6)
+  reviewed_at        DateTime?          @db.Timestamptz(6)
+  reviewed_by        String?            @db.Uuid
+  grades             grades?            @relation(fields: [grade_applied_id], references: [id], onUpdate: NoAction)
+  users              users?             @relation(fields: [reviewed_by], references: [id], onUpdate: NoAction)
+
+  @@index([status], map: "idx_admissions_status")
+  @@index([submitted_at(sort: Desc)], map: "idx_admissions_submitted_at")
+}
+
+model contact_messages {
+  id         String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String
+  email      String
+  phone      String?
+  subject    String?
+  message    String
+  status     contact_status @default(new)
+  created_at DateTime       @default(now()) @db.Timestamptz(6)
+  handled_at DateTime?      @db.Timestamptz(6)
+  handled_by String?        @db.Uuid
+  notes      String?
+  users      users?         @relation(fields: [handled_by], references: [id], onUpdate: NoAction)
+
+  @@index([status], map: "idx_contact_status")
+}
+
+model events {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title            String
+  description      String?
+  start_at         DateTime  @db.Timestamptz(6)
+  end_at           DateTime? @db.Timestamptz(6)
+  location         String?
+  banner_image_url String?
+  is_featured      Boolean   @default(false)
+  created_at       DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@index([start_at(sort: Desc)], map: "idx_events_start_at")
+}
+
+model facilities {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title         String
+  description   String?
+  icon_name     String?
+  image_url     String?
+  display_order Int?     @default(0)
+  is_active     Boolean  @default(true)
+  created_at    DateTime @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model gallery_albums {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String
+  description     String?
+  cover_image_url String?
+  created_at      DateTime         @default(now()) @db.Timestamptz(6)
+  gallery_images  gallery_images[]
+}
+
+model gallery_images {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  album_id       String?         @db.Uuid
+  title          String?
+  caption        String?
+  image_url      String
+  taken_at       DateTime?       @db.Timestamptz(6)
+  display_order  Int?            @default(0)
+  created_at     DateTime        @default(now()) @db.Timestamptz(6)
+  gallery_albums gallery_albums? @relation(fields: [album_id], references: [id], onUpdate: NoAction)
+
+  @@index([album_id, display_order], map: "idx_gallery_images_album_order")
+}
+
+model grade_subjects {
+  grade_id   String   @db.Uuid
+  subject_id String   @db.Uuid
+  grades     grades   @relation(fields: [grade_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  subjects   subjects @relation(fields: [subject_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([grade_id, subject_id])
+}
+
+model grades {
+  id                      String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                    String
+  order_index             Int?                      @default(0)
+  description             String?
+  admissions_applications admissions_applications[]
+  grade_subjects          grade_subjects[]
+}
+
+model news {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title           String
+  slug            String    @unique
+  excerpt         String?
+  content         String?
+  cover_image_url String?
+  author_id       String?   @db.Uuid
+  is_published    Boolean   @default(false)
+  published_at    DateTime? @db.Timestamptz(6)
+  created_at      DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime  @default(now()) @db.Timestamptz(6)
+  users           users?    @relation(fields: [author_id], references: [id], onUpdate: NoAction)
+
+  @@index([published_at(sort: Desc)], map: "idx_news_published_at")
+}
+
+model settings {
+  key        String   @id
+  value      Json
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model subjects {
+  id             String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String
+  description    String?
+  grade_subjects grade_subjects[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model testimonials {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  role        String?
+  rating      Int?     @db.SmallInt
+  content     String
+  is_approved Boolean  @default(false)
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model users {
+  id                      String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                   String                    @unique
+  name                    String?
+  role                    String?                   @default("admin")
+  password_hash           String?
+  created_at              DateTime                  @default(now()) @db.Timestamptz(6)
+  admissions_applications admissions_applications[]
+  contact_messages        contact_messages[]
+  news                    news[]
+}
+
+enum application_status {
+  submitted
+  in_review
+  accepted
+  rejected
+  waitlisted
+  withdrawn
+}
+
+enum contact_status {
+  new
+  in_progress
+  closed
+  spam
+}
+
+enum gender {
+  male
+  female
+  other
+  prefer_not_to_say
 }
