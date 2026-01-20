@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'The Noor School',
-  description: 'Welcome to The Noor School - Education with Values',
+  title: 'Noor Educational System | 25 Years of Excellence',
+  description: 'Noor Educational System - A proven, scalable education model trusted by families for 25 years. From early childhood to college, trainings to certifications.',
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',

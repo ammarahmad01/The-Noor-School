@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, GraduationCap, ChevronDown } from "lucide-react"
+import { Menu, X, GraduationCap, ChevronDown, Building2, Users, Briefcase, TrendingUp } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   const handleContactClick = () => {
     const contactSection = document.getElementById("contact")
@@ -20,13 +21,38 @@ export default function Header() {
   }
 
   const navigation = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Academics", href: "#academics" },
-    { name: "Admissions", href: "#admissions" },
-    { name: "Facilities", href: "#facilities" },
-    { name: "Gallery", href: "#gallery" },
-    { name: "News & Events", href: "#news" },
+    { name: "Home", href: "/" },
+    { 
+      name: "About Noor", 
+      href: "/about",
+      dropdown: [
+        { name: "Our Story", href: "/about#story" },
+        { name: "Mission & Vision", href: "/about#mission" },
+        { name: "Leadership", href: "/about#leadership" },
+        { name: "25 Years Journey", href: "/about#timeline" },
+      ]
+    },
+    { 
+      name: "Institutions", 
+      href: "/programs",
+      dropdown: [
+        { name: "The Noor School", href: "/programs#school" },
+        { name: "Noor College for Women", href: "/programs#college" },
+        { name: "Early Childhood Program", href: "/ece" },
+        { name: "Noor Trainings & Certifications", href: "/programs#trainings" },
+      ]
+    },
+    { name: "Admissions", href: "/#admissions" },
+    { 
+      name: "Partners", 
+      href: "/franchise",
+      dropdown: [
+        { name: "Franchise Opportunities", href: "/franchise" },
+        { name: "Investor Overview", href: "/investors" },
+        { name: "Why Noor Works", href: "/why-noor" },
+      ]
+    },
+    { name: "News & Events", href: "/news" },
   ]
 
   useEffect(() => {
@@ -70,9 +96,9 @@ export default function Header() {
             </motion.div>
             <div className="block">
               <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent leading-tight">
-                The Noor School
+                Noor Educational System
               </h1>
-              <p className="text-[11px] sm:text-xs text-gray-600 font-medium tracking-wide uppercase leading-tight">Education with Values</p>
+              <p className="text-[11px] sm:text-xs text-gray-600 font-medium tracking-wide uppercase leading-tight">25 Years of Trust | Education with Values</p>
             </div>
           </motion.div>
 
@@ -85,17 +111,55 @@ export default function Header() {
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.4, delay: 0.1 * index }}
+                  className="relative"
+                  onMouseEnter={() => item.dropdown && setActiveDropdown(item.name)}
+                  onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <Link
-                    href={item.href}
-                    className="relative px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-all duration-300 rounded-full group"
-                  >
-                    <span className="relative z-10">{item.name}</span>
-                    <motion.div
-                      className="absolute inset-0 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      layoutId="navHover"
-                    />
-                  </Link>
+                  {item.dropdown ? (
+                    <div>
+                      <button
+                        className="relative px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-all duration-300 rounded-full group flex items-center gap-1"
+                      >
+                        <span className="relative z-10">{item.name}</span>
+                        <ChevronDown className="w-4 h-4 relative z-10" />
+                        <motion.div
+                          className="absolute inset-0 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        />
+                      </button>
+                      
+                      <AnimatePresence>
+                        {activeDropdown === item.name && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute top-full mt-2 left-0 bg-white rounded-2xl shadow-2xl py-2 min-w-[220px] border border-gray-100 z-50"
+                          >
+                            {item.dropdown.map((dropdownItem) => (
+                              <Link
+                                key={dropdownItem.name}
+                                href={dropdownItem.href}
+                                className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+                              >
+                                {dropdownItem.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="relative px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-all duration-300 rounded-full group"
+                    >
+                      <span className="relative z-10">{item.name}</span>
+                      <motion.div
+                        className="absolute inset-0 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      />
+                    </Link>
+                  )}
                 </motion.div>
               ))}
             </div>
@@ -180,14 +244,47 @@ export default function Header() {
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ duration: 0.3, delay: 0.1 * index }}
                     >
-                      <Link
-                        href={item.href}
-                        className="flex items-center justify-between px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg mx-2 transition-all duration-200 group"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <span className="font-medium">{item.name}</span>
-                        <ChevronDown className="w-4 h-4 opacity-0 group-hover:opacity-100 rotate-[-90deg] transition-all duration-200" />
-                      </Link>
+                      {item.dropdown ? (
+                        <div>
+                          <button
+                            onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
+                            className="flex items-center justify-between px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg mx-2 transition-all duration-200 group w-full text-left"
+                          >
+                            <span className="font-medium">{item.name}</span>
+                            <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
+                          </button>
+                          <AnimatePresence>
+                            {activeDropdown === item.name && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="overflow-hidden ml-4 mt-1"
+                              >
+                                {item.dropdown.map((dropdownItem) => (
+                                  <Link
+                                    key={dropdownItem.name}
+                                    href={dropdownItem.href}
+                                    className="block px-4 py-2.5 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg mx-2 transition-colors duration-200"
+                                    onClick={() => setIsMenuOpen(false)}
+                                  >
+                                    {dropdownItem.name}
+                                  </Link>
+                                ))}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          className="flex items-center justify-between px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg mx-2 transition-all duration-200 group"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <span className="font-medium">{item.name}</span>
+                        </Link>
+                      )}
                     </motion.div>
                   ))}
                 </nav>

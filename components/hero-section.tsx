@@ -3,32 +3,25 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { ArrowRight, Award, Users, TrendingUp } from "lucide-react"
+import Link from "next/link"
 
 export default function HeroSection() {
-    const handleDownloadForm = () => {
-      const link = document.createElement("a")
-      link.href = "/The_Noor_School_Admission_Form.pdf"
-      link.download = "The_Noor_School_Admission_Form.pdf"
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    }
-
-    const handleExploreAcademics = () => {
-      const academicsSection = document.getElementById("academics")
-      if (academicsSection) {
-        academicsSection.scrollIntoView({ behavior: "smooth" })
+    const handleAdmissions = () => {
+      const admissionsSection = document.getElementById("admissions")
+      if (admissionsSection) {
+        admissionsSection.scrollIntoView({ behavior: "smooth" })
       }
     }
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <motion.div initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 1.5, ease: "easeOut" }}>
           <Image
             src="/2.jpg?height=800&width=1200"
-            alt="School campus"
+            alt="Noor Educational System Campus"
             fill
             className="object-cover"
             priority
@@ -38,49 +31,119 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="absolute inset-0 bg-blue-900/50"
+          className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-blue-800/60 to-blue-900/70"
         />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center text-white px-4">
+      <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto py-20">
+        {/* Silver Jubilee Badge */}
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
+          className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 mb-8"
+        >
+          <Award className="w-5 h-5 text-yellow-300" />
+          <span className="text-sm font-semibold">25 Years of Excellence | 2001 - 2026</span>
+        </motion.div>
+
         <motion.h1
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          className="text-4xl md:text-6xl font-bold mb-6"
+          className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
         >
-          Welcome to The Noor School
+          Noor Educational System
         </motion.h1>
+        
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          className="text-xl md:text-3xl mb-4 font-semibold text-blue-100"
+        >
+          Education with Values
+        </motion.div>
+        
         <motion.p
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto"
+          className="text-lg md:text-xl mb-12 max-w-3xl mx-auto text-gray-100"
         >
-          Nurturing young minds with quality education and strong values for a brighter tomorrow
+          A proven, scalable education model trusted by families for 25 years. From early childhood to college, trainings to teacher certifications — Noor is building Pakistan's education future.
         </motion.p>
+
+        {/* Three CTA Buttons */}
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.9, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
         >
           <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 shadow-lg" onClick={handleDownloadForm}>
-              Download Admission Form
-            </Button>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 bg-transparent shadow-lg"
-                          onClick={handleExploreAcademics}
+            <Button 
+              size="lg" 
+              className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-6 shadow-2xl text-lg font-semibold"
+              onClick={handleAdmissions}
             >
-              Explore Academics
+              Admissions 2026
+              <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </motion.div>
+          
+          <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
+            <Link href="/franchise">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-6 bg-transparent shadow-2xl text-lg font-semibold"
+              >
+                Partner / Franchise with Us
+              </Button>
+            </Link>
+          </motion.div>
+          
+          <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
+            <Link href="/investors">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-6 bg-transparent shadow-2xl text-lg font-semibold"
+              >
+                Investor Overview
+              </Button>
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        {/* Credibility Stats */}
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.1, ease: "easeOut" }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
+        >
+          {[
+            { icon: Award, label: "Est. 2001", value: "25 Years" },
+            { icon: Users, label: "FBISE Affiliated", value: "Trusted" },
+            { icon: TrendingUp, label: "Avg Fee", value: "PKR 3K" },
+            { icon: Award, label: "Model", value: "Proven" },
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5, delay: 1.2 + index * 0.1, type: "spring" }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4"
+            >
+              <stat.icon className="w-8 h-8 mx-auto mb-2 text-yellow-300" />
+              <div className="text-2xl font-bold">{stat.value}</div>
+              <div className="text-sm text-gray-200">{stat.label}</div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
 
