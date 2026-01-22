@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import Header from "@/components/header"
 import FranchiseHeroSection from "@/components/franchise/franchise-hero-section"
 import PartnerBenefitsSection from "@/components/franchise/partner-benefits-section"
+import GrowthPhilosophySection from "@/components/franchise/growth-philosophy-section"
 import FranchiseFormSection from "@/components/franchise/franchise-form-section"
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function FranchisePage() {
       <main>
         <FranchiseHeroSection />
         <PartnerBenefitsSection />
+        <GrowthPhilosophySection />
         <FranchiseFormSection />
       </main>
     </div>

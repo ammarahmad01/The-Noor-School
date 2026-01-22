@@ -3,6 +3,7 @@ import Header from "@/components/header"
 import ECEHeroSection from "@/components/ece/ece-hero-section"
 import ECEPhilosophySection from "@/components/ece/ece-philosophy-section"
 import PAFECAlignmentSection from "@/components/ece/pafec-alignment-section"
+import ParentPartnershipSection from "@/components/ece/parent-partnership-section"
 import ECEBenefitsSection from "@/components/ece/ece-benefits-section"
 import ContactSection from "@/components/contact-section"
 
@@ -19,6 +20,7 @@ export default function ECEPage() {
         <ECEHeroSection />
         <ECEPhilosophySection />
         <PAFECAlignmentSection />
+        <ParentPartnershipSection />
         <ECEBenefitsSection />
         <ContactSection />
       </main>

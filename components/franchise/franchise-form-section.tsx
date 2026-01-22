@@ -7,9 +7,11 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { CheckCircle2, Send } from "lucide-react"
+import { toast } from "sonner"
 
 export default function FranchiseFormSection() {
   const [submitted, setSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,9 +22,26 @@ export default function FranchiseFormSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Add form submission logic here
-    console.log("Franchise inquiry:", formData)
-    setSubmitted(true)
+    setIsLoading(true)
+    try {
+      const res = await fetch("/api/franchise", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+      const result = await res.json()
+      if (result.success) {
+        toast.success("Thank you for your interest! We'll contact you within 2-3 business days.")
+        setFormData({ name: "", email: "", phone: "", city: "", message: "" })
+        setSubmitted(true)
+      } else {
+        toast.error(result.error?.message || "Failed to submit inquiry")
+      }
+    } catch (err) {
+      toast.error("Error submitting inquiry. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -143,9 +162,10 @@ export default function FranchiseFormSection() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-6 text-lg font-semibold shadow-xl"
+                    disabled={isLoading}
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-6 text-lg font-semibold shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Submit Inquiry
+                    {isLoading ? "Submitting..." : "Submit Inquiry"}
                     <Send className="ml-2 w-5 h-5" />
                   </Button>
                 </motion.div>

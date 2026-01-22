@@ -5,6 +5,9 @@ import SilverJubileeSection from "@/components/silver-jubilee-section"
 import AboutSection from "@/components/about-section"
 import AdmissionsSection from "@/components/admissions-section"
 import TestimonialsSection from "@/components/testimonials-section"
+import FranchiseCalloutSection from "@/components/franchise-callout-section"
+import NewsEventsSection from "@/components/news-events-section"
+import VideoHighlightsSection from "@/components/video-highlights-section"
 import ContactSection from "@/components/contact-section"
 
 export default function HomePage() {
@@ -16,8 +19,11 @@ export default function HomePage() {
         <FocusAreasSection />
         <SilverJubileeSection />
         <AboutSection />
+        <VideoHighlightsSection />
         <AdmissionsSection />
         <TestimonialsSection />
+        <FranchiseCalloutSection />
+        <NewsEventsSection />
         <ContactSection />
       </main>
     </div>

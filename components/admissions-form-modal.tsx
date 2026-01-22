@@ -8,7 +8,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "sonner"
 
-export function AdmissionsFormModal() {
+interface AdmissionsFormModalProps {
+  buttonText?: string
+  buttonClassName?: string
+}
+
+export function AdmissionsFormModal({ buttonText = "Apply Now", buttonClassName }: AdmissionsFormModalProps) {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -79,9 +84,9 @@ export function AdmissionsFormModal() {
       <DialogTrigger asChild>
         <Button
           size="lg"
-          className="bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300"
+          className={buttonClassName || "bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300"}
         >
-          Apply Now
+          {buttonText}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto max-w-2xl">
