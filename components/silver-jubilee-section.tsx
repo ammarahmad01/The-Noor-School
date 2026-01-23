@@ -74,66 +74,83 @@ export default function SilverJubileeSection() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 shadow-2xl">
-                <div className="text-center">
+              <motion.div
+                initial={{ scale: 0.8, rotate: -5 }}
+                whileInView={{ scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, type: "spring" }}
+                className="relative bg-white/10 backdrop-blur-md border-4 border-yellow-300/50 rounded-3xl p-6 shadow-2xl overflow-hidden"
+              >
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-300/20 via-transparent to-blue-500/20 animate-pulse" />
+                
+                {/* 25 Year Image */}
+                <div className="relative z-10">
                   <motion.div
-                    initial={{ scale: 0, rotate: -180 }}
-                    whileInView={{ scale: 1, rotate: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, type: "spring" }}
-                    className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center shadow-2xl"
+                    whileHover={{ scale: 1.05, rotate: 2 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <Award className="w-16 h-16 text-blue-900" />
+                    <Image
+                      src="/25year.png"
+                      alt="25 Years of Noor Educational System - Silver Jubilee 2001-2026"
+                      width={500}
+                      height={500}
+                      className="w-full h-auto rounded-2xl shadow-2xl"
+                      priority
+                    />
                   </motion.div>
                   
+                  {/* Subtitle */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="text-7xl font-bold mb-4 bg-gradient-to-r from-yellow-200 to-yellow-400 bg-clip-text text-transparent"
-                  >
-                    2001 - 2026
-                  </motion.div>
-                  
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.5 }}
-                    className="text-2xl font-semibold text-white mb-2"
+                    className="text-center mt-6"
                   >
-                    Silver Jubilee
-                  </motion.p>
-                  
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.7 }}
-                    className="text-blue-100"
-                  >
-                    A Legacy of Trust & Excellence
-                  </motion.p>
+                    <p className="text-2xl font-bold text-yellow-300 mb-2">Silver Jubilee</p>
+                    <p className="text-lg text-blue-100">A Legacy of Trust & Excellence</p>
+                  </motion.div>
                 </div>
 
+                {/* Decorative sparkles */}
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                  className="absolute top-8 right-8 z-20"
+                >
+                  <Sparkles className="w-8 h-8 text-yellow-300" />
+                </motion.div>
+                <motion.div
+                  animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
+                  className="absolute bottom-8 left-8 z-20"
+                >
+                  <Sparkles className="w-6 h-6 text-yellow-400" />
+                </motion.div>
+
                 {/* Decorative corners */}
-                <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-yellow-300 rounded-tl-lg" />
-                <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-yellow-300 rounded-tr-lg" />
-                <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-yellow-300 rounded-bl-lg" />
-                <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-yellow-300 rounded-br-lg" />
-              </div>
+                <div className="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-yellow-300 rounded-tl-xl z-20" />
+                <div className="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-yellow-300 rounded-tr-xl z-20" />
+                <div className="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-yellow-300 rounded-bl-xl z-20" />
+                <div className="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-yellow-300 rounded-br-xl z-20" />
+              </motion.div>
 
               {/* Floating elements */}
               <motion.div
-                animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-                className="absolute -top-4 -right-4 w-20 h-20 bg-yellow-400 rounded-full opacity-20"
+                animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
+                transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                className="absolute -top-6 -right-6 w-24 h-24 bg-yellow-400 rounded-full opacity-20 blur-xl"
               />
               <motion.div
-                animate={{ y: [0, 10, 0], rotate: [0, -5, 0] }}
-                transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
-                className="absolute -bottom-4 -left-4 w-16 h-16 bg-white rounded-full opacity-10"
+                animate={{ y: [0, 15, 0], rotate: [0, -10, 0] }}
+                transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                className="absolute -bottom-6 -left-6 w-20 h-20 bg-white rounded-full opacity-10 blur-xl"
+              />
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+                className="absolute top-1/2 -right-8 w-16 h-16 bg-yellow-300 rounded-full opacity-20 blur-2xl"
               />
             </motion.div>
           </div>

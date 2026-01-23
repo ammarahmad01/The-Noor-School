@@ -18,12 +18,18 @@ export default function VideoHighlightsSection() {
   const [playingVideo, setPlayingVideo] = useState<string | null>(null)
 
   const videos: Video[] = [
-    {
+    /*{
       type: "local",
       src: "/videos/noorexpo.mp4",
       title: "Noorians Expo 2025 Highlights",
       description: "Experience the creativity and talent of our students at the annual Noorians Expo 2025.",
       thumbnail: "/expo.jpg", // Fallback thumbnail
+    },*/
+    {
+      type: "youtube",
+      src: "https://www.youtube.com/embed/LUyn_T2bG-Y?si=iqCRFg541Nvyzfms",
+      title: "Admissions Open 2026 - Join the Noor Family",
+      description: "Discover why families trust Noor Educational System. Admissions are now open for Session 2026.",
     },
     {
       type: "youtube",
@@ -70,10 +76,10 @@ export default function VideoHighlightsSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100"
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
               >
                 {/* Video Container */}
-                <div className="relative aspect-video bg-gray-900 group">
+                <div className="relative w-full aspect-video bg-gray-900 group flex-shrink-0">
                   {video.type === "local" ? (
                     playingVideo === video.src ? (
                       <video
