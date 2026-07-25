@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 
 interface LeadPayload {
   name: string;
@@ -17,16 +18,23 @@ export async function POST(req: Request) {
       );
     }
 
-    // Log the lead (replace with database insertion in production)
-    console.log('[New Lead]', {
+    await prisma.chat_leads.create({
+      data: {
+        name: body.name,
+        phone: body.phone,
+        interest: body.interest,
+      },
+    });
+
+    console.log('[New Lead Saved]', {
       name: body.name,
       phone: body.phone,
       interest: body.interest,
-      createdAt: new Date().toISOString(),
     });
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    console.error('[Lead Save Error]', error);
     return NextResponse.json(
       { error: 'Internal server error.' },
       { status: 500 }
